@@ -21,9 +21,18 @@ public class MainActivity extends AppCompatActivity {
         tviResultado = (TextView) findViewById(R.id.tviResultado);
         Button butPromediar = (Button) findViewById(R.id.butPromediar);
         butPromediar.setOnClickListener(new View.OnClickListener() {
-            long tiempoInicial = new Date().getTime();
+            @Override
+            public void onClick(View view) {
+                List<String[]> resultado = CSVManager.getInstance().obtenerData(
+                        MainActivity.this, "sueldos.csv");
+                TareaComplejaTask tarea = new TareaComplejaTask();
+                tarea.execute();
+            }
+        });
+        /*butPromediar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long tiempoInicial = new Date().getTime();
                 List<String[]> resultado = CSVManager.getInstance().obtenerData(
                         MainActivity.this, "sueldos.csv");
 
@@ -40,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
                 tviResultado.setText(String.valueOf(promedio));
                 long tiempoFinal = new Date().getTime();
-                Log.i("MainActivity", "tiempo: " + ((tiempoFinal- tiempoInicial)/1000));
+                Log.i("MainActivity", "tiempo: " + ((tiempoFinal- tiempoInicial)/1000.0));
             }
-        });
+        });*/
     }
 
     private double sigmoid(double value){
